@@ -1,11 +1,15 @@
+#Andreea Diaz
+#Pregunta 3
 
 
 import math
-
+#Tomamos el input del usuario para el tamano de la memoria
 n = input('Ingrese un valor para el tamaño inicial de la memoria: ')
+#La memoria se representa por una lista de listas de la forma [nombre, tamano]
 print(n)
 buddy = [['Libre',int(n)]]
-    
+
+#Funcion que verifica si hay dos bloques libres consecutivos y los une   
 def rearrange():
     x = 0
     while x in range(len(buddy)):
@@ -16,20 +20,23 @@ def rearrange():
         else:
             x = x+1
         
-
+#Funcion que reserva un bloque de memoria de tamano a y con nombre name
 def reservar(name,a):
     i = -1
+    #Verifica que no exista una direccion de memoria con el mismo nombre
     for x in range(len(buddy)):
         if buddy[x][0] == name:
             print("YA EXISTE UNA DIRECCION DE MEMORIA CON ESE NOMBRE")
-    
+    #Verifica si hay un bloque libre con el tamano necesario
     for x in range(len(buddy)):
         if buddy[x][0] == 'Libre' and a<=buddy[x][1]:
             i = x
             break
+    #Si no lo hay, imprime un mensaje de error
     if i == -1:
         print("NO HAY ESPACIO SUFICIENTE EN LA MEMORIA PARA SATISFACER SU PEDIDO")
-        
+    #Si lo hay, consigue el bloque de tamano mas cercano al tamano necesario y lo reserva. Si necesita dividirse, se le agrega 
+    # una lista a buddy con el tamano dividido y el nombre 'Libre' y se reserva el bloque 
     for x in range(i+1,len(buddy)):
         if buddy[x][1] < buddy[i][1] and a<=buddy[x][1] and buddy[x][0] == 'F':
             i = x
@@ -45,7 +52,7 @@ def reservar(name,a):
             break
     
     
-
+#Funcion para liberar un bloque de memoria con nombre name
 def liberar(name):
     b = True
     for x in range(len(buddy)):
@@ -53,13 +60,15 @@ def liberar(name):
             b = False
             buddy[x][0] = 'Libre'
             break
+    #Si no consigue un bloque con el nombre name, imprime un mensaje de error
     if(b):
         print('NO EXISTE UNA DIRECCION DE MEMORIA CON ESE NOMBRE')
+    #De lo contrario se pasa a verificar si hay dos bloques libres consecutivos y los une
     else:
         rearrange()
         
      
-
+#Imprime la memoria
 def mostrar():
     pr = '|'
     for x in range(len(buddy)):
@@ -70,6 +79,7 @@ def mostrar():
         pr = pr + '| '
     print(pr)
 
+#Ciclo que permite al usuario ingresar los comandos
 while(True):
     res = input("Ingrese una accion a realizar: ")
     print(res)
@@ -96,16 +106,3 @@ while(True):
     else:
         print("Las palabras validad son RESERVAR , LIBERAR, MOSTRAR, SALIR")
     
-        
-#print(reservar('A',32))
-#print(reservar('B',64))
-#print(reservar('C',60))
-#print(reservar('D',150))
-#print(liberar('A'))
-#print(liberar('B'))
-#print(reservar('E',100))
-#print(reservar('P',100))
-#print('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -')
-#print('|' +  'A: 56          ' +  '|' + 'B: 256                     ' + '|         '                                                           '|')
-#print('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -')
-#print(mostrar())
