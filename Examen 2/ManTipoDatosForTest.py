@@ -1,3 +1,5 @@
+#Para realizar test en ManTipoDatos.py 
+#La memoria tiene 40 bytes
 #No empaquetado, se respeta la alineacion 
 struct = [['meta2',['int', 'char']],['meta',['uni', 'bool','double']]]
 union = [['uni',['int', 'char', 'bool']]]
@@ -20,16 +22,12 @@ def encontrarTipo(nombre):
 
 apuntador = 0
 def describir(nombre, imprimir = True):
-    #print(nombre)
     datos, tipoDescribir = encontrarTipo(nombre)
     if(datos == "No existe"):
-        #print(nombre + " no existe")
         return 0,0
     tamaño = 0
     global apuntador
     desperdicio = 0
-    #print(datos)
-    #print(datos[1:])
     if(tipoDescribir == "atomico"):
         tipoNombre = datos[0]
         bytes = int(datos[1])
@@ -46,7 +44,6 @@ def describir(nombre, imprimir = True):
                 desperdicio = desperdicio + 1
     if(tipoDescribir == "struct"):
         for i in datos[1:][0]:
-            #print(i)
             datosTipo, tipo = encontrarTipo(i)
             if(tipo == "atomico"):
                 tipoNombre = datosTipo[0]
@@ -61,18 +58,13 @@ def describir(nombre, imprimir = True):
                             manejador[j+k] = tipoNombre
                         break
                     elif(j%alineacion != 0 and manejador[j] == j):
-                        #print(j,apuntador, desperdicio, imprimir)
                         desperdicio = desperdicio + 1
             else:
-                #print(apuntador)
                 tamañoAux,desperdicioAux = describir(i,False) 
                 tamaño = tamaño + tamañoAux
                 desperdicio = desperdicio + desperdicioAux
-                #print(desperdicio, imprimir)
-                #print(apuntador)
     if(tipoDescribir == "union"):
         for i in datos[1:][0]:
-            #print(i)
             datosTipo, tipo = encontrarTipo(i)
             manejadorAux = manejador.copy()
             desperdicioUnion = desperdicio
@@ -93,10 +85,8 @@ def describir(nombre, imprimir = True):
                             manejadorAux[j+k] = tipoNombre
                         break
                     elif(j%alineacion != 0 and manejadorAux[j] == j):
-                        #print(j,apuntador, desperdicio, imprimir)
                         desperdicioUnion = desperdicioUnion + 1
             else:
-                #print(apuntador)
                 tamañoAux,desperdicioAux = describir(i,False) 
                 if(tamañoAux > tamaño):
                     tamaño = tamañoAux
@@ -106,19 +96,7 @@ def describir(nombre, imprimir = True):
         apuntador = max(apuntadores)
         desperdicio = max(desperdicios)
     if(imprimir):
-        #print(nombre + " :")
-        #print("tamaño = " + str(tamaño+desperdicio) + " bytes")
-        #for i in printLine:
-        #    print(i + " bytes")
-        #print("desperdicio = " + str(desperdicio) + " bytes")
-        #print(manejador)
         return tamaño+desperdicio,desperdicio
     else:
         return tamaño+desperdicio, desperdicio
-
-#print(describir('int'))
-#print(describir('meta2'))
-#print(describir('meta'))
-#print(describir('uni'))
-#print(manejador)
             
