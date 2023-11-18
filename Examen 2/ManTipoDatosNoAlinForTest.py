@@ -1,4 +1,6 @@
-#No se respeta la alineacion 
+#Para realizar test en ManTipoDatosNoAlin.py 
+#La memoria tiene 40 bytes
+#No empaquetado, no se respeta la alineacion 
 struct = [['meta2',['int', 'char']],['meta',['int', 'char', 'bool', 'uni','double']]]
 union = [['uni',['int', 'char', 'bool']]]
 atomico = [['int', '4', '4'], ['char', '1', '2'], ['bool', '1', '2'], ['double', '8', '8']]
